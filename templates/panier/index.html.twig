@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+{% block title 'Mon panier' %}
+
+{% block body %}
+    <h1>Mon panier</h1>
+    {% if panier | length > 0 %}
+        <form action="{{ path('app_panier_validate') }}" method="post" class="d-inline-block">
+            <button class="btn btn-primary">Valider mon panier</button>
+        </form>
+    {% endif %}
+    <div class="card">
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Couleur</th>
+                    <th>Taille</th>
+                    <th>Photo</th>
+                    <th>Prix</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for produit in panier %}
+                    <tr>
+                        <td>{{ produit.titre }}</td>
+                        <td style="background: {{ produit.couleur }}">&nbsp;</td>
+                        <td>{{ produit.taille }}</td>
+                        <td>
+                            <img width="300" height="auto" src="{{ produit.photo }}" alt="">
+                        </td>
+                        <td>{{ produit.prix }}</td>
+                        <td>
+                            <form action="{{ path('app_panier_remove', {id: produit.id}) }}" class="d-inline-block" method="post">
+                                <button class="btn btn-danger">supprimer</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="11">Aucun produit dans le panier</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

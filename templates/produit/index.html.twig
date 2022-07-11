@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Produit index{% endblock %}
+
+{% block body %}
+    <h1>Produit index</h1>
+
+    <a class="btn btn-primary" href="{{ path('app_produit_new') }}">Create new</a>
+    <div class="card">
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Couleur</th>
+                    <th>Taille</th>
+                    <th>Collection</th>
+                    <th>Photo</th>
+                    <th>Prix</th>
+                    <th>Stock</th>
+                    <th>Date_enregistrement</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for produit in produits %}
+                    <tr>
+                        <td>{{ produit.id }}</td>
+                        <td>{{ produit.titre }}</td>
+                        <td>{{ produit.description }}</td>
+                        <td style="background: {{ produit.couleur }}">&nbsp;</td>
+                        <td>{{ produit.taille }}</td>
+                        <td>{{ produit.collection }}</td>
+                        <td>
+                            <img height="auto" src="{{ produit.photo }}" alt="">
+                        </td>
+                        <td>{{ produit.prix }}</td>
+                        <td>{{ produit.stock }}</td>
+                        <td>{{ produit.dateEnregistrement ? produit.dateEnregistrement|date('Y-m-d H:i:s') : '' }}</td>
+                        <td>
+                            <a href="{{ path('app_produit_show', {'id': produit.id}) }}">show</a>
+                            <a href="{{ path('app_produit_edit', {'id': produit.id}) }}">edit</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="11">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
